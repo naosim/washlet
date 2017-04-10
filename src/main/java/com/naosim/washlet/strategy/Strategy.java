@@ -1,5 +1,6 @@
 package com.naosim.washlet.strategy;
 
+import com.naosim.washlet.common.EventType;
 import com.naosim.washlet.common.State;
 import com.sun.tools.javac.util.Pair;
 import lombok.EqualsAndHashCode;

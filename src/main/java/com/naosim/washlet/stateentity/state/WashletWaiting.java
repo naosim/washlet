@@ -1,16 +1,16 @@
 package com.naosim.washlet.stateentity.state;
 
 import com.naosim.washlet.common.State;
-import com.naosim.washlet.common.WashletAction;
-import com.naosim.washlet.statepattern.StateSetter;
+import com.naosim.washlet.statepattern.StateUpdater;
+import com.naosim.washlet.statepattern.state.Context;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class WashletWaiting implements StateAction.SitDown {
-    private final StateSetter stateSetter;
+    private final Context context;
 
     @Override
     public void sitDown() {
-        stateSetter.setWashlet(State.ready);
+        context.getStateUpdater().updateState(State.ready);
     }
 }

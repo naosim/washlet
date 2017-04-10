@@ -1,7 +1,5 @@
 package com.naosim.washlet.stateentity.state;
 
-import com.naosim.washlet.common.State;
-
 public class StateAction {
     public interface Oshiri {
         void pressedOshiriButton();

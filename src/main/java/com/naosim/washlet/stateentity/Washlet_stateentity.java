@@ -1,46 +1,45 @@
 package com.naosim.washlet.stateentity;
 
 import com.naosim.washlet.common.*;
-import com.naosim.washlet.statepattern.StateSetter;
-import com.naosim.washlet.statepattern.state.WashletBide;
-import com.naosim.washlet.statepattern.state.WashletOshiri;
-import com.naosim.washlet.statepattern.state.WashletReady;
-import com.naosim.washlet.statepattern.state.WashletWaiting;
+import com.naosim.washlet.statepattern.state.Context;
 import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
-public class Washlet_stateentity implements WashletAction, PowerLevelAction {
-    private final WashletRepository washletRepository;
+public class Washlet_stateentity implements WashletAndPowerLevelAction {
+    private final WashletWrapper washletWrapper;
 
     private PowerLevel powerLevel;
 
+    public Washlet_stateentity(Device device) {
+        washletWrapper = new WashletWrapper(device);
+    }
+
     public void pressedOshiriButton() {
-        washletRepository.getOshiriAction().ifPresent(v -> v.pressedOshiriButton());
+        washletWrapper.getOshiriAction().ifPresent(v -> v.pressedOshiriButton());
     }
 
     public void pressedBideButton() {
-        washletRepository.getBideAction().ifPresent(v -> v.pressedBideButton());
+        washletWrapper.getBideAction().ifPresent(v -> v.pressedBideButton());
     }
 
     public void pressedStopButton() {
-        washletRepository.getStopAction().ifPresent(v -> v.pressedStopButton());
+        washletWrapper.getStopAction().ifPresent(v -> v.pressedStopButton());
     }
 
     public void pressedPowerUpButton() {
-        washletRepository.setPowerLevel(powerLevel.up());
+        powerLevel = powerLevel.up();
+        washletWrapper.setPowerLevel(powerLevel);
     }
 
     public void pressedPowerDownButton() {
-        washletRepository.setPowerLevel(powerLevel.down());
+        powerLevel = powerLevel.down();
+        washletWrapper.setPowerLevel(powerLevel);
     }
 
-
-
     public void standUp() {
-        washletRepository.getStandUpAction().ifPresent(v -> v.standUp());
+        washletWrapper.getStandUpAction().ifPresent(v -> v.standUp());
     }
 
     public void sitDown() {
-        washletRepository.getSitDownAction().ifPresent(v -> v.sitDown());
+        washletWrapper.getSitDownAction().ifPresent(v -> v.sitDown());
     }
 }

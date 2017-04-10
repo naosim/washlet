@@ -1,4 +1,4 @@
-package com.naosim.washlet.strategy;
+package com.naosim.washlet.common;
 
 public enum EventType {
     pressedOshiriButton,

@@ -1,30 +1,26 @@
 package com.naosim.washlet.stateentity.state;
 
-import com.naosim.washlet.common.Device;
 import com.naosim.washlet.common.State;
-import com.naosim.washlet.common.WashletAction;
-import com.naosim.washlet.statepattern.StateSetter;
-import lombok.AllArgsConstructor;
+import com.naosim.washlet.statepattern.state.Context;
 
-@AllArgsConstructor
 public class WashletReady implements StateAction.Oshiri, StateAction.Bide, StateAction.StandUp {
-    private final StateSetter stateSetter;
+    private final Context context;
 
-    public WashletReady(StateSetter stateSetter, Device device) {
-        this.stateSetter = stateSetter;
-        device.stop();
+    public WashletReady(Context context) {
+        this.context = context;
+        context.getDevice().stop();
     }
 
     public void pressedOshiriButton() {
-        stateSetter.setWashlet(State.oshiri);
+        context.getStateUpdater().updateState(State.oshiri);
     }
 
     public void pressedBideButton() {
-        stateSetter.setWashlet(State.bide);
+        context.getStateUpdater().updateState(State.bide);
     }
 
     public void standUp() {
-        stateSetter.setWashlet(State.waiting);
+        context.getStateUpdater().updateState(State.waiting);
     }
 
 }

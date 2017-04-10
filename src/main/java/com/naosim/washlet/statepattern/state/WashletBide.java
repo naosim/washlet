@@ -1,21 +1,18 @@
 package com.naosim.washlet.statepattern.state;
 
 import com.naosim.washlet.common.*;
-import com.naosim.washlet.statepattern.StateSetter;
-import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 public class WashletBide implements WashletAction {
-    private final StateSetter stateSetter;
+    private final Context context;
 
-    public WashletBide(StateSetter stateSetter, Device device, PowerLevel powerLevel) {
-        this.stateSetter = stateSetter;
-        device.start(powerLevel, Angle.bide);
+    public WashletBide(Context context) {
+        this.context = context;
+        context.getDevice().start(context.getPowerLevel(), Angle.bide);
     }
 
     @Override
     public void pressedOshiriButton() {
-        stateSetter.setWashlet(State.oshiri);
+        context.getStateUpdater().updateState(State.oshiri);
     }
 
     @Override
@@ -24,7 +21,7 @@ public class WashletBide implements WashletAction {
 
     @Override
     public void pressedStopButton() {
-        stateSetter.setWashlet(State.ready);
+        context.getStateUpdater().updateState(State.ready);
     }
 
     @Override

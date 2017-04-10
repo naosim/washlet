@@ -1,14 +1,12 @@
 package com.naosim.washlet.statepattern.state;
 
-import com.naosim.washlet.common.PowerLevel;
 import com.naosim.washlet.common.State;
 import com.naosim.washlet.common.WashletAction;
-import com.naosim.washlet.statepattern.StateSetter;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class WashletWaiting implements WashletAction {
-    private final StateSetter stateSetter;
+    private final Context context;
 
     @Override
     public void pressedOshiriButton() {
@@ -31,6 +29,6 @@ public class WashletWaiting implements WashletAction {
 
     @Override
     public void sitDown() {
-        stateSetter.setWashlet(State.ready);
+        context.getStateUpdater().updateState(State.ready);
     }
 }

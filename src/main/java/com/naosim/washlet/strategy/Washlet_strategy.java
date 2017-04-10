@@ -8,7 +8,7 @@ import lombok.ToString;
 @ToString(includeFieldNames = false)
 @EqualsAndHashCode(doNotUseGetters = true)
 @AllArgsConstructor
-public class Washlet_strategy  implements WashletAction, PowerLevelAction {
+public class Washlet_strategy  implements WashletAndPowerLevelAction {
     private State state = State.waiting;
     private PowerLevel powerLevel = new PowerLevel(1);
     private final Device device;

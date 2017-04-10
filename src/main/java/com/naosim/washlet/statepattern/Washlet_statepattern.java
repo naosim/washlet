@@ -1,32 +1,18 @@
 package com.naosim.washlet.statepattern;
 
 import com.naosim.washlet.common.*;
-import com.naosim.washlet.statepattern.state.WashletBide;
-import com.naosim.washlet.statepattern.state.WashletOshiri;
-import com.naosim.washlet.statepattern.state.WashletReady;
-import com.naosim.washlet.statepattern.state.WashletWaiting;
-import lombok.AllArgsConstructor;
+import com.naosim.washlet.statepattern.state.*;
 
-@AllArgsConstructor
-public class Washlet_statepattern implements WashletAction, PowerLevelAction {
+public class Washlet_statepattern implements WashletAndPowerLevelAction {
     private final Device device;
-    private final StateSetter stateSetter = (state) -> {
-        if(State.waiting.equals(state)) {
-            this.washlet = new WashletWaiting(this.stateSetter);
-        }
-        if(State.ready.equals(state)) {
-            this.washlet = new WashletReady(this.stateSetter);
-        }
-        if(State.oshiri.equals(state)) {
-            this.washlet = new WashletOshiri(this.stateSetter, device, this.powerLevel);
-        }
-        if(State.bide.equals(state)) {
-            this.washlet = new WashletBide(this.stateSetter, device, this.powerLevel);
-        }
-
-    };
-    private WashletAction washlet = new WashletWaiting(this.stateSetter);
+    private WashletAction washlet;
     private PowerLevel powerLevel;
+    private final WashletStateFactory washletStateFactory = new WashletStateFactory();
+
+    public Washlet_statepattern(Device device) {
+        this.device = device;
+        updateState(State.waiting);
+    }
 
     public void pressedOshiriButton() {
         washlet.pressedOshiriButton();
@@ -56,5 +42,9 @@ public class Washlet_statepattern implements WashletAction, PowerLevelAction {
 
     public void sitDown() {
         washlet.sitDown();
+    }
+
+    private void updateState(State state) {
+        this.washlet = washletStateFactory.create(state, new Context(this::updateState, device, powerLevel));
     }
 }

@@ -1,14 +1,15 @@
 package com.naosim.washlet.allinone;
 
 import com.naosim.washlet.common.*;
-import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
-public class Washlet_allinone implements WashletAction, PowerLevelAction {
+public class Washlet_allinone implements WashletAndPowerLevelAction {
     private final Device device;
     private State state = State.waiting;
     private PowerLevel powerLevel = new PowerLevel(1);
 
+    public Washlet_allinone(Device device) {
+        this.device = device;
+    }
 
     @Override
     public void pressedOshiriButton() {

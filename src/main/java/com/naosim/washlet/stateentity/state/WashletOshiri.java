@@ -1,25 +1,25 @@
 package com.naosim.washlet.stateentity.state;
 
 import com.naosim.washlet.common.*;
-import com.naosim.washlet.statepattern.StateSetter;
+import com.naosim.washlet.statepattern.StateUpdater;
+import com.naosim.washlet.statepattern.state.Context;
 import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 public class WashletOshiri implements StateAction.Bide, StateAction.Stop {
-    private final StateSetter stateSetter;
+    private final Context context;
 
-    public WashletOshiri(StateSetter stateSetter, Device device, PowerLevel powerLevel) {
-        this.stateSetter = stateSetter;
-        device.start(powerLevel, Angle.oshiri);
+    public WashletOshiri(Context context) {
+        this.context = context;
+        context.getDevice().start(context.getPowerLevel(), Angle.oshiri);
     }
 
     @Override
     public void pressedBideButton() {
-        stateSetter.setWashlet(State.bide);
+        context.getStateUpdater().updateState(State.bide);
     }
 
     @Override
     public void pressedStopButton() {
-        stateSetter.setWashlet(State.ready);
+        context.getStateUpdater().updateState(State.ready);
     }
 }
