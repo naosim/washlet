@@ -1,7 +1,6 @@
-package com.naosim.washlet.statepattern.state;
+package com.naosim.washlet.statepatternloosely.state;
 
-import com.naosim.washlet.common.Angle;
-import com.naosim.washlet.common.WashletAction;
+import com.naosim.washlet.common.*;
 
 public class WashletBide implements WashletAction {
     private final Context context;
@@ -13,7 +12,7 @@ public class WashletBide implements WashletAction {
 
     @Override
     public void pressedOshiriButton() {
-        context.getStateUpdater().updateState(new WashletOshiri(context));
+        context.getStateUpdater().updateState(State.oshiri);
     }
 
     @Override
@@ -22,7 +21,7 @@ public class WashletBide implements WashletAction {
 
     @Override
     public void pressedStopButton() {
-        context.getStateUpdater().updateState(new WashletReady(context));
+        context.getStateUpdater().updateState(State.ready);
     }
 
     @Override

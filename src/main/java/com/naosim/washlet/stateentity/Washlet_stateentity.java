@@ -1,8 +1,8 @@
 package com.naosim.washlet.stateentity;
 
 import com.naosim.washlet.common.*;
-import com.naosim.washlet.statepattern.state.Context;
-import lombok.AllArgsConstructor;
+import com.naosim.washlet.stateentity.state.Context;
+import com.naosim.washlet.stateentity.state.WashletWaiting;
 
 public class Washlet_stateentity implements WashletAndPowerLevelAction {
     private final WashletWrapper washletWrapper;
@@ -10,7 +10,22 @@ public class Washlet_stateentity implements WashletAndPowerLevelAction {
     private PowerLevel powerLevel;
 
     public Washlet_stateentity(Device device) {
-        washletWrapper = new WashletWrapper(device);
+        washletWrapper = new WashletWrapper(new WashletWaiting(new Context() {
+            @Override
+            public StateUpdater getStateUpdater() {
+                return washletWrapper;
+            }
+
+            @Override
+            public Device getDevice() {
+                return device;
+            }
+
+            @Override
+            public PowerLevel getPowerLevel() {
+                return powerLevel;
+            }
+        }));
     }
 
     public void pressedOshiriButton() {
@@ -27,12 +42,10 @@ public class Washlet_stateentity implements WashletAndPowerLevelAction {
 
     public void pressedPowerUpButton() {
         powerLevel = powerLevel.up();
-        washletWrapper.setPowerLevel(powerLevel);
     }
 
     public void pressedPowerDownButton() {
         powerLevel = powerLevel.down();
-        washletWrapper.setPowerLevel(powerLevel);
     }
 
     public void standUp() {

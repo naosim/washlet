@@ -1,7 +1,9 @@
 package com.naosim.washlet.statepattern;
 
 import com.naosim.washlet.common.*;
-import com.naosim.washlet.statepattern.state.*;
+import com.naosim.washlet.statepattern.state.Context;
+import com.naosim.washlet.statepattern.state.WashletOshiri;
+import com.naosim.washlet.statepattern.state.WashletWaiting;
 
 public class Washlet_statepattern implements WashletAndPowerLevelAction {
     private final Device device;
@@ -11,7 +13,23 @@ public class Washlet_statepattern implements WashletAndPowerLevelAction {
 
     public Washlet_statepattern(Device device) {
         this.device = device;
-        updateState(State.waiting);
+        updateState(new WashletWaiting(new Context() {
+
+            @Override
+            public StateUpdater getStateUpdater() {
+                return Washlet_statepattern.this::updateState;
+            }
+
+            @Override
+            public Device getDevice() {
+                return device;
+            }
+
+            @Override
+            public PowerLevel getPowerLevel() {
+                return powerLevel;
+            }
+        }));
     }
 
     public void pressedOshiriButton() {
@@ -44,7 +62,7 @@ public class Washlet_statepattern implements WashletAndPowerLevelAction {
         washlet.sitDown();
     }
 
-    private void updateState(State state) {
-        this.washlet = washletStateFactory.create(state, new Context(this::updateState, device, powerLevel));
+    private void updateState(WashletAction state) {
+        this.washlet = state;
     }
 }

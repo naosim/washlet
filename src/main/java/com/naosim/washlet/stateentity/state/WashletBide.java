@@ -1,11 +1,9 @@
 package com.naosim.washlet.stateentity.state;
 
 import com.naosim.washlet.common.*;
-import com.naosim.washlet.statepattern.StateUpdater;
-import com.naosim.washlet.statepattern.state.Context;
-import lombok.AllArgsConstructor;
 
-public class WashletBide implements StateAction.Oshiri, StateAction.Stop {
+
+public class WashletBide implements StateAction, StateAction.Oshiri, StateAction.Stop {
     private final Context context;
 
     public WashletBide(Context context) {
@@ -15,11 +13,11 @@ public class WashletBide implements StateAction.Oshiri, StateAction.Stop {
 
     @Override
     public void pressedOshiriButton() {
-        context.getStateUpdater().updateState(State.oshiri);
+        context.getStateUpdater().updateState(new WashletOshiri(context));
     }
 
     @Override
     public void pressedStopButton() {
-        context.getStateUpdater().updateState(State.ready);
+        context.getStateUpdater().updateState(new WashletReady(context));
     }
 }

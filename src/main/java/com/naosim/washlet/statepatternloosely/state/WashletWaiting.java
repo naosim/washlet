@@ -1,5 +1,6 @@
-package com.naosim.washlet.statepattern.state;
+package com.naosim.washlet.statepatternloosely.state;
 
+import com.naosim.washlet.common.State;
 import com.naosim.washlet.common.WashletAction;
 import lombok.AllArgsConstructor;
 
@@ -28,6 +29,6 @@ public class WashletWaiting implements WashletAction {
 
     @Override
     public void sitDown() {
-        context.getStateUpdater().updateState(new WashletReady(context));
+        context.getStateUpdater().updateState(State.ready);
     }
 }

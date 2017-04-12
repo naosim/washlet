@@ -1,9 +1,7 @@
 package com.naosim.washlet.stateentity.state;
 
-import com.naosim.washlet.common.State;
-import com.naosim.washlet.statepattern.state.Context;
 
-public class WashletReady implements StateAction.Oshiri, StateAction.Bide, StateAction.StandUp {
+public class WashletReady implements StateAction, StateAction.Oshiri, StateAction.Bide, StateAction.StandUp {
     private final Context context;
 
     public WashletReady(Context context) {
@@ -12,15 +10,15 @@ public class WashletReady implements StateAction.Oshiri, StateAction.Bide, State
     }
 
     public void pressedOshiriButton() {
-        context.getStateUpdater().updateState(State.oshiri);
+        context.getStateUpdater().updateState(new WashletOshiri(context));
     }
 
     public void pressedBideButton() {
-        context.getStateUpdater().updateState(State.bide);
+        context.getStateUpdater().updateState(new WashletBide(context));
     }
 
     public void standUp() {
-        context.getStateUpdater().updateState(State.waiting);
+        context.getStateUpdater().updateState(new WashletWaiting(context));
     }
 
 }
