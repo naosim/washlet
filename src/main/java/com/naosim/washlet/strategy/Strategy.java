@@ -30,7 +30,7 @@ public class Strategy {
         table.put(Pair.of(State.bide, EventType.pressedOshiriButton), State.oshiri);
 
         table.put(Pair.of(State.oshiri, EventType.pressedStopButton), State.ready);
-        table.put(Pair.of(State.oshiri, EventType.pressedBideButton), State.oshiri);
+        table.put(Pair.of(State.oshiri, EventType.pressedBideButton), State.bide);
     }
 
     /**
